@@ -42,11 +42,20 @@ st.markdown("""
     }
     .main-header p { font-size: 1.2rem; color: #fff; opacity: 0.9; }
     .result-card {
-        background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
-        border-radius: 20px; padding: 2rem;
+        background: rgba(255,255,255,0.97);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 2rem;
         box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         border: 1px solid rgba(255,255,255,0.5);
         transition: transform 0.3s ease;
+        color: #222;  /* dark text for readability */
+    }
+    .result-card h2 {
+        color: #222;
+    }
+    .result-card p {
+        color: #333;
     }
     .result-card:hover { transform: translateY(-5px); }
     .safe-result { border-left: 8px solid #2ecc71; }
@@ -75,6 +84,7 @@ st.markdown("""
         border-radius: 15px; border: 2px solid rgba(255,255,255,0.2);
         background: rgba(255,255,255,0.9); font-size: 1rem; padding: 1rem;
         box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: border 0.3s;
+        color: #333; /* readable */
     }
     .stTextArea textarea:focus { border-color: #667eea; box-shadow: 0 0 0 3px rgba(102,126,234,0.2); }
     .stFileUploader > div {
@@ -197,10 +207,10 @@ def clean_arabic_text(text):
     return text
 
 # ------------------------------
-# ENHANCED OCR FUNCTION (better preprocessing)
+# ENHANCED OCR FUNCTION (with resizing)
 # ------------------------------
 def extract_text_from_image(image):
-    """Extract Arabic text from image using advanced preprocessing."""
+    """Extract Arabic text from image using advanced preprocessing + resize."""
     try:
         # Convert PIL to OpenCV (RGB to BGR for cv2)
         image = np.array(image.convert("RGB"))
@@ -209,15 +219,14 @@ def extract_text_from_image(image):
         # Convert to grayscale
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         
+        # Resize image to improve OCR for small text (2x upscale)
+        gray = cv2.resize(gray, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
+        
         # Denoise
         gray = cv2.medianBlur(gray, 3)
         
-        # Apply adaptive thresholding to handle different lighting
-        thresh = cv2.adaptiveThreshold(
-            gray, 255, 
-            cv2.ADAPTIVE_THRESH_GAUSSIAN_C, 
-            cv2.THRESH_BINARY, 11, 2
-        )
+        # Apply OTSU thresholding
+        _, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
         
         # OCR with Arabic language (page segmentation mode 6 = uniform block)
         text = pytesseract.image_to_string(
@@ -292,9 +301,9 @@ with tab1:
 with tab2:
     st.markdown("### 📤 Upload an image containing Arabic text")
     uploaded_file = st.file_uploader(
-        "",
+        "Upload image",  # Fixed: label is not empty
         type=["png", "jpg", "jpeg", "bmp", "tiff"],
-        label_visibility="collapsed"
+        label_visibility="collapsed"  # Hides the label but no warning
     )
     
     if uploaded_file:
@@ -315,7 +324,13 @@ with tab2:
             
             if extracted and "OCR Error" not in extracted:
                 st.markdown("### 📄 Extracted Text")
-                st.info(extracted)
+                # Use text_area for better readability
+                st.text_area(
+                    "Extracted Text",
+                    extracted,
+                    height=120,
+                    label_visibility="collapsed"
+                )
                 
                 with st.spinner("🔍 Analyzing text..."):
                     pred, conf, cleaned, score = predict_text(extracted)
