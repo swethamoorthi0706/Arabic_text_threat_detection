@@ -24,176 +24,80 @@ st.set_page_config(
 # ------------------------------
 st.markdown("""
 <style>
-    /* Import Google Fonts */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-
-    html, body, [class*="css"] {
-        font-family: 'Inter', sans-serif;
-    }
-
-    /* Main background gradient */
-    .stApp {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-
-    /* Style the main container */
+    html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
+    .stApp { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
     .main-header {
-        text-align: center;
-        padding: 2rem 0;
-        background: rgba(255,255,255,0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        margin-bottom: 2rem;
+        text-align: center; padding: 2rem 0;
+        background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+        border-radius: 20px; margin-bottom: 2rem;
         box-shadow: 0 8px 32px rgba(0,0,0,0.1);
         border: 1px solid rgba(255,255,255,0.2);
     }
-
     .main-header h1 {
-        font-size: 3rem;
-        font-weight: 700;
+        font-size: 3rem; font-weight: 700;
         background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         margin-bottom: 0.5rem;
     }
-
-    .main-header p {
-        font-size: 1.2rem;
-        color: #fff;
-        opacity: 0.9;
-    }
-
-    /* Card style for results */
+    .main-header p { font-size: 1.2rem; color: #fff; opacity: 0.9; }
     .result-card {
-        background: rgba(255,255,255,0.95);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        padding: 2rem;
+        background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
+        border-radius: 20px; padding: 2rem;
         box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         border: 1px solid rgba(255,255,255,0.5);
         transition: transform 0.3s ease;
     }
-
-    .result-card:hover {
-        transform: translateY(-5px);
-    }
-
-    .safe-result {
-        border-left: 8px solid #2ecc71;
-    }
-
-    .threat-result {
-        border-left: 8px solid #e74c3c;
-    }
-
-    /* Custom button */
+    .result-card:hover { transform: translateY(-5px); }
+    .safe-result { border-left: 8px solid #2ecc71; }
+    .threat-result { border-left: 8px solid #e74c3c; }
     .stButton > button {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        font-weight: 600;
-        border: none;
-        border-radius: 10px;
-        padding: 0.75rem 2rem;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        color: white; font-weight: 600; border: none; border-radius: 10px;
+        padding: 0.75rem 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         transition: all 0.3s ease;
     }
-
     .stButton > button:hover {
-        transform: scale(1.05);
-        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        transform: scale(1.05); box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
     }
-
-    /* Tabs styling */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 10px;
-        background: rgba(255,255,255,0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 15px;
-        padding: 0.5rem;
-        border: 1px solid rgba(255,255,255,0.2);
+        gap: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+        border-radius: 15px; padding: 0.5rem; border: 1px solid rgba(255,255,255,0.2);
     }
-
-    .stTabs [data-baseweb="tab"] {
-        border-radius: 10px;
-        color: white;
-        font-weight: 600;
-    }
-
+    .stTabs [data-baseweb="tab"] { border-radius: 10px; color: white; font-weight: 600; }
     .stTabs [aria-selected="true"] {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
         color: white !important;
     }
-
-    /* Spinner style */
-    .stSpinner > div {
-        border-top-color: #667eea !important;
-    }
-
-    /* Text area */
+    .stSpinner > div { border-top-color: #667eea !important; }
     .stTextArea textarea {
-        border-radius: 15px;
-        border: 2px solid rgba(255,255,255,0.2);
-        background: rgba(255,255,255,0.9);
-        font-size: 1rem;
-        padding: 1rem;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        transition: border 0.3s;
+        border-radius: 15px; border: 2px solid rgba(255,255,255,0.2);
+        background: rgba(255,255,255,0.9); font-size: 1rem; padding: 1rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: border 0.3s;
     }
-
-    .stTextArea textarea:focus {
-        border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102,126,234,0.2);
-    }
-
-    /* File uploader */
+    .stTextArea textarea:focus { border-color: #667eea; box-shadow: 0 0 0 3px rgba(102,126,234,0.2); }
     .stFileUploader > div {
-        border-radius: 15px;
-        border: 2px dashed rgba(255,255,255,0.5);
-        background: rgba(255,255,255,0.1);
-        backdrop-filter: blur(10px);
-        padding: 2rem;
-        color: white;
+        border-radius: 15px; border: 2px dashed rgba(255,255,255,0.5);
+        background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+        padding: 2rem; color: white;
     }
-
-    /* Metric cards */
     .metric-card {
-        background: rgba(255,255,255,0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 15px;
-        padding: 1.5rem;
-        text-align: center;
-        color: white;
-        border: 1px solid rgba(255,255,255,0.2);
+        background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+        border-radius: 15px; padding: 1.5rem; text-align: center;
+        color: white; border: 1px solid rgba(255,255,255,0.2);
     }
-
     .metric-card h3 {
-        font-size: 2rem;
-        margin-bottom: 0.5rem;
+        font-size: 2rem; margin-bottom: 0.5rem;
         background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-
-    /* Footer */
     .footer {
-        text-align: center;
-        margin-top: 3rem;
-        color: rgba(255,255,255,0.7);
+        text-align: center; margin-top: 3rem; color: rgba(255,255,255,0.7);
         font-size: 0.9rem;
     }
-
-    /* Sidebar */
-    .css-1d391kg {
-        background: rgba(0,0,0,0.2) !important;
-        backdrop-filter: blur(10px);
-    }
-
-    .sidebar-content {
-        color: white;
-    }
-
-    /* Hide Streamlit branding */
+    .css-1d391kg { background: rgba(0,0,0,0.2) !important; backdrop-filter: blur(10px); }
+    .sidebar-content { color: white; }
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
 </style>
@@ -293,18 +197,29 @@ def clean_arabic_text(text):
     return text
 
 # ------------------------------
-# OCR FUNCTION
+# ENHANCED OCR FUNCTION (better preprocessing)
 # ------------------------------
 def extract_text_from_image(image):
-    """Extract Arabic text from image using Tesseract."""
+    """Extract Arabic text from image using advanced preprocessing."""
     try:
-        # Convert PIL to OpenCV format
-        image = np.array(image)
-        gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-        gray = cv2.medianBlur(gray, 3)
-        _, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+        # Convert PIL to OpenCV (RGB to BGR for cv2)
+        image = np.array(image.convert("RGB"))
+        image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
         
-        # OCR with Arabic language
+        # Convert to grayscale
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        
+        # Denoise
+        gray = cv2.medianBlur(gray, 3)
+        
+        # Apply adaptive thresholding to handle different lighting
+        thresh = cv2.adaptiveThreshold(
+            gray, 255, 
+            cv2.ADAPTIVE_THRESH_GAUSSIAN_C, 
+            cv2.THRESH_BINARY, 11, 2
+        )
+        
+        # OCR with Arabic language (page segmentation mode 6 = uniform block)
         text = pytesseract.image_to_string(
             thresh,
             lang='ara',
@@ -383,9 +298,11 @@ with tab2:
     )
     
     if uploaded_file:
-        # Display image
-        image = Image.open(uploaded_file)
-        st.image(image, caption="Uploaded Image", use_container_width=True)
+        # Open and convert to RGB
+        image = Image.open(uploaded_file).convert("RGB")
+        
+        # Display image (fixed parameter)
+        st.image(image, caption="Uploaded Image", use_column_width=True)
         
         col1, col2, col3 = st.columns([1,2,1])
         with col2:
