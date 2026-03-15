@@ -20,27 +20,50 @@ st.set_page_config(
 )
 
 # ------------------------------
-# CUSTOM CSS for premium look
+# RESPONSIVE CSS FIXES
 # ------------------------------
 st.markdown("""
 <style>
+    /* Import Google Fonts */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-    html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
-    .stApp { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    
+    html, body, [class*="css"] {
+        font-family: 'Inter', sans-serif;
+    }
+    
+    /* Main background */
+    .stApp {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    /* Header styling */
     .main-header {
-        text-align: center; padding: 2rem 0;
-        background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
-        border-radius: 20px; margin-bottom: 2rem;
+        text-align: center;
+        padding: 2rem 0;
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        margin-bottom: 2rem;
         box-shadow: 0 8px 32px rgba(0,0,0,0.1);
         border: 1px solid rgba(255,255,255,0.2);
     }
+    
     .main-header h1 {
-        font-size: 3rem; font-weight: 700;
+        font-size: 3rem;
+        font-weight: 700;
         background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         margin-bottom: 0.5rem;
     }
-    .main-header p { font-size: 1.2rem; color: #fff; opacity: 0.9; }
+    
+    .main-header p {
+        font-size: 1.2rem;
+        color: #fff;
+        opacity: 0.9;
+    }
+    
+    /* Result card */
     .result-card {
         background: rgba(255,255,255,0.97);
         backdrop-filter: blur(10px);
@@ -49,72 +72,181 @@ st.markdown("""
         box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         border: 1px solid rgba(255,255,255,0.5);
         transition: transform 0.3s ease;
-        color: #222;  /* dark text for readability */
+        color: #222;
     }
+    
     .result-card h2 {
         color: #222;
     }
+    
     .result-card p {
         color: #333;
     }
-    .result-card:hover { transform: translateY(-5px); }
-    .safe-result { border-left: 8px solid #2ecc71; }
-    .threat-result { border-left: 8px solid #e74c3c; }
+    
+    .result-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .safe-result {
+        border-left: 8px solid #2ecc71;
+    }
+    
+    .threat-result {
+        border-left: 8px solid #e74c3c;
+    }
+    
+    /* Button styling */
     .stButton > button {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white; font-weight: 600; border: none; border-radius: 10px;
-        padding: 0.75rem 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        color: white;
+        font-weight: 600;
+        border: none;
+        border-radius: 10px;
+        padding: 0.75rem 2rem;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         transition: all 0.3s ease;
     }
+    
     .stButton > button:hover {
-        transform: scale(1.05); box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
     }
+    
+    /* Tabs styling */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 10px; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
-        border-radius: 15px; padding: 0.5rem; border: 1px solid rgba(255,255,255,0.2);
+        gap: 10px;
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 0.5rem;
+        border: 1px solid rgba(255,255,255,0.2);
     }
-    .stTabs [data-baseweb="tab"] { border-radius: 10px; color: white; font-weight: 600; }
+    
+    .stTabs [data-baseweb="tab"] {
+        border-radius: 10px;
+        color: white;
+        font-weight: 600;
+    }
+    
     .stTabs [aria-selected="true"] {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
         color: white !important;
     }
-    .stSpinner > div { border-top-color: #667eea !important; }
+    
+    /* Spinner */
+    .stSpinner > div {
+        border-top-color: #667eea !important;
+    }
+    
+    /* Text area */
     .stTextArea textarea {
-        border-radius: 15px; border: 2px solid rgba(255,255,255,0.2);
-        background: rgba(255,255,255,0.9); font-size: 1rem; padding: 1rem;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: border 0.3s;
-        color: #333; /* readable */
+        border-radius: 15px;
+        border: 2px solid rgba(255,255,255,0.2);
+        background: rgba(255,255,255,0.9);
+        font-size: 1rem;
+        padding: 1rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        transition: border 0.3s;
+        color: #333;
     }
-    .stTextArea textarea:focus { border-color: #667eea; box-shadow: 0 0 0 3px rgba(102,126,234,0.2); }
-    .stFileUploader > div {
-        border-radius: 15px; border: 2px dashed rgba(255,255,255,0.5);
-        background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
-        padding: 2rem; color: white;
+    
+    .stTextArea textarea:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102,126,234,0.2);
     }
+    
+    /* ===== FIXED FILE UPLOADER (MOBILE FRIENDLY) ===== */
+    .stFileUploader {
+        background: rgba(255,255,255,0.08);
+        border-radius: 15px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .stFileUploader label {
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+    
+    .stFileUploader section {
+        border: 2px dashed rgba(255,255,255,0.5);
+        border-radius: 15px;
+        padding: 2rem;
+        text-align: center;
+    }
+    
+    /* Metric cards */
     .metric-card {
-        background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
-        border-radius: 15px; padding: 1.5rem; text-align: center;
-        color: white; border: 1px solid rgba(255,255,255,0.2);
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 1.5rem;
+        text-align: center;
+        color: white;
+        border: 1px solid rgba(255,255,255,0.2);
     }
+    
     .metric-card h3 {
-        font-size: 2rem; margin-bottom: 0.5rem;
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
         background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
+    
+    /* Footer */
     .footer {
-        text-align: center; margin-top: 3rem; color: rgba(255,255,255,0.7);
+        text-align: center;
+        margin-top: 3rem;
+        color: rgba(255,255,255,0.7);
         font-size: 0.9rem;
     }
-    .css-1d391kg { background: rgba(0,0,0,0.2) !important; backdrop-filter: blur(10px); }
-    .sidebar-content { color: white; }
+    
+    /* Sidebar */
+    .css-1d391kg {
+        background: rgba(0,0,0,0.2) !important;
+        backdrop-filter: blur(10px);
+    }
+    
+    .sidebar-content {
+        color: white;
+    }
+    
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
+    
+    /* ===== MOBILE RESPONSIVE ADJUSTMENTS ===== */
+    @media (max-width: 768px) {
+        .main-header h1 {
+            font-size: 2rem;
+        }
+        .main-header p {
+            font-size: 1rem;
+        }
+        .result-card {
+            padding: 1.2rem;
+        }
+        .stFileUploader section {
+            padding: 1rem;
+        }
+        .stButton > button {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+        .metric-card {
+            padding: 1rem;
+        }
+        .metric-card h3 {
+            font-size: 1.5rem;
+        }
+    }
 </style>
 """, unsafe_allow_html=True)
 
 # ------------------------------
-# Tesseract path configuration (for local and cloud)
+# Tesseract path configuration
 # ------------------------------
 if os.name == 'nt':  # Windows
     pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
@@ -207,7 +339,7 @@ def clean_arabic_text(text):
     return text
 
 # ------------------------------
-# ENHANCED OCR FUNCTION (with resizing)
+# ENHANCED OCR FUNCTION (with resize + mobile optimization)
 # ------------------------------
 def extract_text_from_image(image):
     """Extract Arabic text from image using advanced preprocessing + resize."""
@@ -219,7 +351,15 @@ def extract_text_from_image(image):
         # Convert to grayscale
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         
-        # Resize image to improve OCR for small text (2x upscale)
+        # --- Mobile image size optimization ---
+        # If image is too large, resize to max dimension 1200px
+        max_dim = 1200
+        h, w = gray.shape
+        if max(h, w) > max_dim:
+            scale = max_dim / max(h, w)
+            gray = cv2.resize(gray, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
+        
+        # Resize image to improve OCR for small text (2x upscale after possible downscale)
         gray = cv2.resize(gray, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
         
         # Denoise
@@ -300,17 +440,17 @@ with tab1:
 # ----- Tab 2: Image Upload -----
 with tab2:
     st.markdown("### 📤 Upload an image containing Arabic text")
+    # Use clear label, no label_visibility collapse (better for mobile)
     uploaded_file = st.file_uploader(
-        "Upload image",  # Fixed: label is not empty
-        type=["png", "jpg", "jpeg", "bmp", "tiff"],
-        label_visibility="collapsed"  # Hides the label but no warning
+        "📸 Choose an image (or take a photo)",
+        type=["png", "jpg", "jpeg", "bmp", "tiff"]
     )
     
     if uploaded_file:
         # Open and convert to RGB
         image = Image.open(uploaded_file).convert("RGB")
         
-        # Display image (fixed parameter)
+        # Display image (use_column_width works on all devices)
         st.image(image, caption="Uploaded Image", use_column_width=True)
         
         col1, col2, col3 = st.columns([1,2,1])
@@ -324,7 +464,6 @@ with tab2:
             
             if extracted and "OCR Error" not in extracted:
                 st.markdown("### 📄 Extracted Text")
-                # Use text_area for better readability
                 st.text_area(
                     "Extracted Text",
                     extracted,
@@ -358,7 +497,7 @@ with tab2:
     else:
         st.markdown("""
         <div style="text-align: center; padding: 3rem; background: rgba(255,255,255,0.05); border-radius: 20px;">
-            <p style="color: rgba(255,255,255,0.7); font-size: 1.2rem;">📸 Drag and drop an image or click to browse</p>
+            <p style="color: rgba(255,255,255,0.7); font-size: 1.2rem;">📸 Tap to browse or take a photo</p>
         </div>
         """, unsafe_allow_html=True)
 
