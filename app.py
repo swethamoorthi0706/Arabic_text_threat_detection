@@ -155,7 +155,7 @@ with st.sidebar:
         <p style="font-weight: 600;">📊 Dataset: L-HSAB</p>
         <p>⚙️ n-gram range: (2,5)</p>
         <p>🎯 Classes: 2 (Offensive / Non-Offensive)</p>
-        <p>📅 Trained: 2025-03-15</p>
+        <p>📅 Trained: 2026-03-15</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -368,6 +368,6 @@ with tab2:
 st.markdown("""
 <div class="footer">
     <p>🚀 Built with Streamlit & LinearSVM | Dataset: L-HSAB | OCR: Tesseract</p>
-    <p>© 2025 Arabic Threat Detection System</p>
+    <p>© 2026 Arabic Threat Detection System</p>
 </div>
 """, unsafe_allow_html=True)
