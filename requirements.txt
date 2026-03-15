@@ -1,8 +1,8 @@
 streamlit==1.35.0
-numpy==2.2.6
-pandas==2.3.3
-scikit-learn==1.7.2
-joblib==1.5.3
-pillow==12.1.0
-opencv-python-headless==4.13.0.92
-pytesseract==0.3.13
+numpy==1.26.4
+pandas==2.2.2
+scikit-learn==1.4.2
+joblib==1.4.2
+pillow==10.3.0
+opencv-python-headless==4.9.0.80
+pytesseract==0.3.10
